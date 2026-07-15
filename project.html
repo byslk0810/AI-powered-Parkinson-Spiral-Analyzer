@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เกี่ยวกับโครงงาน - Parkinson Spiral Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="pageSkeleton"><div class="skeleton-spinner"></div></div>
+
+    <header class="header header-sub">
+        <div class="utility-bar">
+            <button id="langToggleBtn" class="util-btn" title="EN / ไทย">EN</button>
+            <button id="themeToggleBtn" class="util-btn" title="Dark mode">🌙</button>
+            <button id="soundToggleBtn" class="util-btn" title="Sound">🔊</button>
+        </div>
+        <a href="index.html" class="back-link" data-i18n="back_link">← กลับหน้าแรก</a>
+        <h1 data-i18n="project_title">เกี่ยวกับโครงงาน</h1>
+        <p data-i18n="project_subtitle">ที่มา ระเบียบวิธีวิจัย และข้อจำกัดของระบบ</p>
+    </header>
+
+    <main class="container">
+
+        <section class="card">
+            <h2 data-i18n="project_objective_title">วัตถุประสงค์ของโครงงาน</h2>
+            <p data-i18n="project_objective_body">
+                โครงงานนี้จัดทำขึ้นเพื่อพัฒนาเครื่องมือประเมินความเสี่ยงของโรคพาร์กินสันเบื้องต้น
+                โดยใช้ปัญญาประดิษฐ์วิเคราะห์ลักษณะการวาดเส้นเกลียว ซึ่งเป็นวิธีที่ใช้ในทางการแพทย์
+                เพื่อประเมินความสั่นและความสามารถในการควบคุมกล้ามเนื้อมัดเล็ก
+                (Fine Motor Control) ของผู้ทดสอบ
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 data-i18n="project_dataset_title">ชุดข้อมูลที่ใช้เทรนโมเดล (Dataset)</h2>
+            <p data-i18n="project_dataset_body_full">
+                โมเดลถูกเทรนด้วยภาพลายเส้นก้นหอยจากผู้ป่วยโรคพาร์กินสัน
+                และกลุ่มควบคุม (healthy control) รวมทั้งสิ้น <strong>1,073 ภาพ</strong>
+                แบ่งเป็นชุดฝึก (train) <strong>939 ภาพ</strong> (healthy 486 / parkinson 453),
+                ชุดตรวจสอบระหว่างเทรน (validation) <strong>90 ภาพ</strong> (healthy 47 / parkinson 43),
+                และชุดทดสอบ (test) <strong>44 ภาพ</strong> (healthy 23 / parkinson 21)
+                โดยข้อมูลภาพทั้งหมดมาจากแหล่งข้อมูลสาธารณะ <strong>Roboflow</strong>
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 data-i18n="project_architecture_title">สถาปัตยกรรมโมเดล (Model Architecture)</h2>
+            <p data-i18n="project_architecture_body_full">
+                โมเดลใช้เทคนิค Transfer Learning บนสถาปัตยกรรม <strong>MobileNetV2</strong>
+                ซึ่งเป็นโครงข่ายประสาทเทียมแบบ Convolutional Neural Network (CNN)
+                ที่ออกแบบมาให้มีขนาดเล็กและประมวลผลได้รวดเร็ว เหมาะกับการรันบนเบราว์เซอร์โดยตรง
+                ผ่าน TensorFlow.js โดยต่อท้ายด้วยชั้น Global Average Pooling, Dense(128, ReLU)
+                และ Dense(1, Sigmoid) สำหรับการจำแนกแบบ 2 กลุ่ม (Parkinson's / Healthy)
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 data-i18n="project_results_title">ผลการทดสอบความแม่นยำของโมเดล</h2>
+            <p data-i18n="project_results_body">
+                ผลการทดสอบบนชุดข้อมูล test (44 ภาพ) พบว่าโมเดลมีความแม่นยำโดยรวม
+                (Overall Accuracy) <strong>91%</strong>
+            </p>
+            <div class="video-wrap" style="padding-top:0; height:auto; position:static; box-shadow:none; overflow:visible;">
+                <table style="width:100%; border-collapse:collapse; font-size:14.5px; margin-top:10px;">
+                    <thead>
+                        <tr style="border-bottom:2px solid var(--teal);">
+                            <th style="text-align:left; padding:8px;" data-i18n="table_group">กลุ่ม</th>
+                            <th style="text-align:center; padding:8px;">Precision</th>
+                            <th style="text-align:center; padding:8px;">Recall</th>
+                            <th style="text-align:center; padding:8px;">F1-score</th>
+                            <th style="text-align:center; padding:8px;" data-i18n="table_count">จำนวนภาพ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom:1px solid rgba(0,0,0,.08);">
+                            <td style="padding:8px;">Healthy</td>
+                            <td style="text-align:center; padding:8px;">0.85</td>
+                            <td style="text-align:center; padding:8px;">1.00</td>
+                            <td style="text-align:center; padding:8px;">0.92</td>
+                            <td style="text-align:center; padding:8px;">23</td>
+                        </tr>
+                        <tr style="border-bottom:1px solid rgba(0,0,0,.08);">
+                            <td style="padding:8px;">Parkinson</td>
+                            <td style="text-align:center; padding:8px;">1.00</td>
+                            <td style="text-align:center; padding:8px;">0.81</td>
+                            <td style="text-align:center; padding:8px;">0.89</td>
+                            <td style="text-align:center; padding:8px;">21</td>
+                        </tr>
+                        <tr style="font-weight:600;">
+                            <td style="padding:8px;">Weighted Avg</td>
+                            <td style="text-align:center; padding:8px;">0.92</td>
+                            <td style="text-align:center; padding:8px;">0.91</td>
+                            <td style="text-align:center; padding:8px;">0.91</td>
+                            <td style="text-align:center; padding:8px;">44</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="video-credit" data-i18n="project_results_credit">
+                💡 ประเมินด้วย <code>classification_report()</code> จาก scikit-learn บนชุดข้อมูล test ที่โมเดลไม่เคยเห็นระหว่างเทรน
+            </p>
+        </section>
+
+        <section class="card">
+            <h2 data-i18n="project_limitations_title">ข้อจำกัดของระบบ</h2>
+            <ol class="info-list">
+                <li data-i18n="project_limitation_1">เป็นเพียงเครื่องมือคัดกรองเบื้องต้น ไม่สามารถใช้แทนการวินิจฉัยของแพทย์ผู้เชี่ยวชาญได้</li>
+                <li data-i18n="project_limitation_2">ผลลัพธ์อาจคลาดเคลื่อนได้จากอุปกรณ์ที่ใช้วาด (เมาส์ / นิ้ว / ปากกาสไตลัส) และขนาดหน้าจอ</li>
+                <li data-i18n="project_limitation_3">โมเดลเทรนจากภาพวาดผ่านหน้าจอดิจิทัล อาจมีความแม่นยำต่างจากการวาดบนกระดาษจริง</li>
+                <li data-i18n="project_limitation_4">ยังไม่ได้ผ่านการรับรองจากหน่วยงานทางการแพทย์อย่างเป็นทางการ</li>
+            </ol>
+        </section>
+
+        <section class="card">
+            <h2 data-i18n="project_references_title">เอกสารอ้างอิง (References)</h2>
+            <ol class="info-list">
+                <li>
+                    <span data-i18n="reference_1_org">โรงพยาบาลรามาธิบดี</span>. <em data-i18n="reference_1_title">โรคพาร์กินสัน อาการสั่น</em>.
+                    <a href="https://www.rama.mahidol.ac.th/ramachannel/article/%E0%B9%82%E0%B8%A3%E0%B8%84%E0%B8%9E%E0%B8%B2%E0%B8%A3%E0%B9%8C%E0%B8%81%E0%B8%B4%E0%B8%99%E0%B8%AA%E0%B8%B1%E0%B8%99-%E0%B8%AD%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B8%AA%E0%B8%B1%E0%B9%88%E0%B8%99/" target="_blank" rel="noopener">rama.mahidol.ac.th</a>
+                </li>
+                <li>
+                    <span data-i18n="reference_2_org">โรงพยาบาลพระรามเก้า</span>. <em data-i18n="reference_2_title">โรคพาร์กินสัน (Parkinson's Disease)</em>.
+                    <a href="https://praram9.com/th/articles/parkinsons-disease" target="_blank" rel="noopener">praram9.com</a>
+                </li>
+                <li>
+                    <span data-i18n="reference_3_org">โรงพยาบาลเมดพาร์ค</span>. <em data-i18n="reference_3_title">โรคพาร์กินสัน</em>.
+                    <a href="https://www.medparkhospital.com/disease-and-treatment/parkinsons-disease" target="_blank" rel="noopener">medparkhospital.com</a>
+                </li>
+            </ol>
+        </section>
+
+        <section class="card">
+            <h2 data-i18n="project_advisor_title">อาจารย์ที่ปรึกษาโครงงาน</h2>
+            <p><em data-i18n="project_advisor_body">1.นายสุทธิศักดิ์ จันทร์ห้างหว้า</em></p>
+            <p><em data-i18n="project_advisor_name2">2.นางปิ่นแก้ว กฤชแสงโชติ</em></p>
+        </section>
+
+        <div class="home-buttons">
+            <a href="test.html" class="btn analyze" data-i18n="btn_start_test">เริ่มทำแบบทดสอบ</a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p data-i18n="footer_line1">Parkinson Spiral Analyzer Version 6.0</p>
+        <p data-i18n="footer_line2">Developed for Educational &amp; Research Purposes</p>
+    </footer>
+
+    <script src="i18n.js"></script>
+    <script src="enhancements.js"></script>
+
+</body>
+</html>
